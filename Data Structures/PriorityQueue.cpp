@@ -38,8 +38,8 @@ void swap(int *a, int *b) {
 }
 
 // Function to heapify the tree
-void heapify(vector<int> &hT, int i) {
-  int size = hT.size();
+void deletionHeapify(vector<int> &hT, int i) {
+  int   size = hT.size();
 
   // Find the largest among root, left child and right child
   int largest = i;
@@ -49,25 +49,41 @@ void heapify(vector<int> &hT, int i) {
     largest = l;
   if (r < size && hT[r] > hT[largest])
     largest = r;
-
   // Swap and continue heapifying if root is not largest
   if (largest != i) {
     swap(&hT[i], &hT[largest]);
-    heapify(hT, largest);
+    deletionHeapify(hT, largest);
   }
+}
+
+void insertionHeapify(vector<int> &ht, int i)
+{
+    int n = ht.size();
+    // Find parent
+    int parent = (i - 1) / 2;
+
+    if (ht[parent] > 0) {
+        // For Max-Heap
+        // If current node is greater than its parent
+        // Swap both of them and call heapify again
+        // for the parent
+        if (ht[i] > ht[parent]) {
+            swap(ht[i], ht[parent]);
+            // Recursively heapify the parent node
+            insertionHeapify(ht, parent);
+        }
+    }
 }
 
 // Function to insert an element into the tree
 void insert(vector<int> &ht, int newNum) {
-    int size = ht.size();
+    int size = ht.size() + 1;
     if(size == 0) {
         ht.push_back(newNum);
     }
     else {
         ht.push_back(newNum);
-        for(int i = (size/2) - 1; i >= 0; i--) {
-            heapify(ht, i);
-        }
+        insertionHeapify(ht, size-1);
     }
 }
 
@@ -83,7 +99,7 @@ void deleteNode(vector<int> &ht, int num) {
 
     ht.pop_back();
     for (int i = (size/2) - 1; i >= 0; i--) {
-        heapify(ht, i);
+        deletionHeapify(ht, i);
     }
 }
 
@@ -118,5 +134,11 @@ int main()
 
     cout << "After deleting an element: " << endl;
 
+    printArray(heapTree);
+
+    insert(heapTree, 15);
+    insert(heapTree, 8);
+    insert(heapTree, 20);
+    cout << "After inserting an element: " << endl;
     printArray(heapTree);
 }
