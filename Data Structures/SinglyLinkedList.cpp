@@ -5,6 +5,13 @@ using namespace std;
 // Linked List
 /*  1. A linked list is a linear data structure that includes a series of connected nodes.
    Here, each node store the data and the address of the next node.
+
+   Operation on linked list :
+
+    Traversal - access each element of the linked list
+    Insertion - adds a new element
+    Deletion - removes the existing elements
+
 */
 
 // Create a node
